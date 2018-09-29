@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TestMapper">
+
+	<select id="getnow" resultType="String">
+		SELECT date('now')
+	</select>
+	
+	<select id="getcount" resultType="String">
+		SELECT line_date
+		FROM LINEDB
+		WHERE line_data = 'test3'
+	</select>
+
+</mapper>

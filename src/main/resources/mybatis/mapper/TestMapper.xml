@@ -11,7 +11,7 @@
 	<select id="getcount" resultType="String">
 		SELECT line_date
 		FROM LINEDB
-		WHERE line_data = 'test3'
+		WHERE line_data = 'test1'
 	</select>
 
 </mapper>

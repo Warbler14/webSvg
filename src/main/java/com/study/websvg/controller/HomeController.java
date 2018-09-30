@@ -1,13 +1,7 @@
 package com.study.websvg.controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -49,62 +43,8 @@ public class HomeController {
 		String count = testService.getCount();
 		logger.debug("count : " + count);
 		logger.debug("----------------------------");
-		//executeQuery();
 		
 		return "home";
 	}
 
-	
-	
-	public Object executeQuery(){
-		
-		Object result = null;
-		
-		try {
-			Class.forName("org.sqlite.JDBC");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-
-		String query  = "select count(*) cnt from linedb";
-		try {
-			System.out.println("!sql : " + query);
-			con = DriverManager.getConnection("jdbc:sqlite:C:\\workSpaces\\workServer\\WebSvg\\sqlite\\SQLiteDB", "admin", "admin");
-			//===================================================
-			pstmt = con.prepareStatement( query );
-			
-			rs = pstmt.executeQuery();
-			String cnt = rs.getString("cnt");
-			System.out.println( cnt );
-			//===================================================
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(query);
-		}catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(query);
-		}
-			finally {
-		
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		
-		return result;
-	}
 }

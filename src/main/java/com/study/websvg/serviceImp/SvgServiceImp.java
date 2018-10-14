@@ -184,7 +184,7 @@ public class SvgServiceImp implements SvgService {
 	public void getMixSvgPngImg( HttpServletRequest request, HttpServletResponse response ) {
 
 		try {
-			//====================
+			//==============================================
 			String tempSvgImgPath = request.getSession().getServletContext().getRealPath("/resources/svg/testSvg2.png" );
 			
 			logger.info("tempSvgImgPath : " + tempSvgImgPath);
@@ -211,7 +211,7 @@ public class SvgServiceImp implements SvgService {
 			
 			svgOut.flush();
 			svgOut.close();
-			//====================
+			//==============================================
 			
 			String serverImagePath = request.getSession().getServletContext().getRealPath("/WEB-INF/image/bird.jpg" );
 			
@@ -236,7 +236,17 @@ public class SvgServiceImp implements SvgService {
 				
 				ImageIO.write(image, "png", out);
 				
+				//==============================================
 				
+				String saveImgPath = request.getSession().getServletContext().getRealPath("/resources/svg/viewMixSvgPngImg.png" );
+				
+				logger.info("saveImgPath : " + saveImgPath);
+				
+				File saveFile = new File( saveImgPath );
+				OutputStream saveOut = new FileOutputStream(saveFile);
+				ImageIO.write(image, "png", saveOut);
+				
+				//==============================================
 			}else{
 				response.getWriter().println("<h1>There is no image</h1>");
 				return;

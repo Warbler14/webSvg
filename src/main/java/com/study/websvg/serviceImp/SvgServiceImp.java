@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,8 @@ import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.study.websvg.service.SvgService;
 
@@ -29,6 +33,25 @@ public class SvgServiceImp implements SvgService {
 //	@Autowired
 //	private SqlSession sqlSession;
 
+	@Override
+	public void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception {
+
+		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+		MultipartFile multipartFile = null;
+		while (iterator.hasNext()) {
+			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+			if (multipartFile.isEmpty() == false) {
+				logger.debug("------------- file start -------------");
+				logger.debug("name : " + multipartFile.getName());
+				logger.debug("filename : " + multipartFile.getOriginalFilename());
+				logger.debug("size : " + multipartFile.getSize());
+				logger.debug("-------------- file end --------------\n");
+			}
+		}
+
+	}
+	
 	@Override
 	public void getSvgImg( HttpServletRequest request, HttpServletResponse response ) {
 

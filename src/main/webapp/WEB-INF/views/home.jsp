@@ -10,5 +10,12 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+
+
+<span>
+	<a href="/websvg/localImgPreview"  >/websvg/localImgPreview</a>
+</span>
+
+
 </body>
 </html>

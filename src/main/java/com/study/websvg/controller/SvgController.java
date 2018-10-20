@@ -2,6 +2,7 @@ package com.study.websvg.controller;
 
 import java.util.Locale;
 
+import javax.activation.CommandMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.study.websvg.service.SvgService;
 
@@ -77,5 +79,16 @@ public class SvgController {
 		
 		
 		return "localImgPreview";
+	}
+	
+	@RequestMapping(value="/sample/insertBoard.do")
+	public ModelAndView insertBoard(HttpServletRequest request) throws Exception{
+		ModelAndView mv = new ModelAndView();
+//		ModelAndView mv = new ModelAndView("redirect:/sample/openBoardList.do");
+
+		svgService.insertBoard(null, request);
+
+		mv.setViewName("home");
+		return mv;
 	}
 }

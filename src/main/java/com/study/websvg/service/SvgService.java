@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface SvgService {
 
-	public void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception;
+	public Map<String, Object> insertBoard(HttpServletRequest request) ;
 	
 	public void getSvgImg( HttpServletRequest request, HttpServletResponse response );
 	

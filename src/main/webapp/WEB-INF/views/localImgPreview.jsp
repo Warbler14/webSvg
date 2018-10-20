@@ -28,6 +28,15 @@
 			<input type='file' name="imgFile" onchange="readURL(this);" />
 			
 			 <a href="#this" class="btn" id="write">작성하기</a>
+			 
+			 &nbsp;&nbsp;
+			 
+			 <a href="#this" class="btn" id="ajaxTest">ajax</a>
+			 
+			 &nbsp;&nbsp;
+			 
+			 <a href="#this" class="btn" id="upload">ajax파일 보내기</a>
+			 
 		</div>
 		
 		<div id="imgView">
@@ -35,6 +44,21 @@
 		</div>
 		
 	</form>
+	
+	
+	<c:forEach var="item" items="${imgFileList}">
+		<tr align="center" background="" onmouseover="this.style.backgroundColor='SkyBlue'" onmouseout="this.style.backgroundColor=''" >
+			<td>${item.fileName}</td>
+			<td>${item.savePath}</td>
+<%-- 
+			<td><fn:formatDate value="${item.bdate}" pattern="yy-MM-dd aahh:mm:ss" /></td>
+ --%>	
+		</tr>
+	</c:forEach>
+	
+	
+	<P>  testvalue ${testvalue}. </P>
+	
 </body>
 
 <script type="text/javascript" src="./resources/js/jquery-2.1.1.min.js"></script>
@@ -45,9 +69,19 @@
 	$(document).ready(function() {
 		console.log("localImgPreview load");
 
-		$("#write").on("click", function(e) { //작성하기 버튼
+		$("#write").on("click", function(e) {
 			e.preventDefault();
 			fn_insertBoard();
+		});
+		
+		$("#upload").on("click", function(e) {
+			e.preventDefault();
+			ajaxFormUpload();
+		});
+		
+		$("#ajaxTest").on("click", function(e) {
+			e.preventDefault();
+			ajaxJS();
 		});
 	});
 
@@ -68,8 +102,50 @@
 	
 	function fn_insertBoard() {
 		var comSubmit = new ComSubmit("form1");
-		comSubmit.setUrl("<c:url value='/sample/insertBoard.do' />");
+		comSubmit.setUrl("<c:url value='/imgUploadTest' />");
 		comSubmit.submit();
+	}
+	
+	function ajaxJS(){
+		/* var id = $("#id").val(); */
+		
+		var ajaxUrl = "<c:url value='/jsonTest' />";
+		console.log("test start");
+		
+		
+		$.ajax({
+			url:ajaxUrl,
+			dataType:"json",	
+			Type:"post",
+			data:{
+				send:"123a"
+			},
+			success : function(data) {
+				console.log("name : " + data.name ) ;
+				console.log("str : " + data.str ) ;
+				console.log("number : " + data.number ) ;
+			}
+		});
+		
+		console.log("test end");
+	}
+	
+
+	function ajaxFormUpload() {
+		var form = $('#form1')[0];
+		var formData = new FormData(form);
+		var formUrl = "<c:url value='/imgUploadTestAjax' />";
+		
+		$.ajax({
+			url : formUrl,
+			processData : false,
+			contentType : false,
+			data : formData,
+			type : 'POST',
+			success : function(result) {
+				alert("업로드 성공!!");
+			}
+		});
 	}
 </script>
 </html>

@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +13,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.study.websvg.model.JsonTestVO;
 import com.study.websvg.service.TestService;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class BasicController {
 
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BasicController.class);
 
 	@Autowired
 	private TestService testService;
@@ -46,13 +50,27 @@ public class HomeController {
 	@RequestMapping(value = "/dbTest", method = RequestMethod.GET)
 	public String dbTest(Locale locale, Model model) {
 		
-		logger.debug("----------------------------");
 		String count = testService.getCount();
 		model.addAttribute("count", count);
 		logger.debug("count : " + count);
-		logger.debug("----------------------------");
 		
 		return "dbTest";
+	}
+	
+	@RequestMapping("/jsonTest")
+	@ResponseBody
+	public JsonTestVO jsonTest( HttpServletRequest request ) {
+		
+		String send = request.getParameter("send");
+		
+		JsonTestVO vo = new JsonTestVO();
+		vo.setName("json data test");
+		vo.setStr( send );
+		vo.setNumber(100000);
+		
+		logger.debug("vo : " + vo.toStringMultiline());
+		
+		return vo;
 	}
 
 }

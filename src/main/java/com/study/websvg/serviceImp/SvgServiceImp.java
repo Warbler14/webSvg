@@ -6,7 +6,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -23,7 +26,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.study.websvg.define.Constants;
 import com.study.websvg.service.SvgService;
+import com.study.websvg.util.FileUtil;
 
 @Service
 public class SvgServiceImp implements SvgService {
@@ -34,22 +39,58 @@ public class SvgServiceImp implements SvgService {
 //	private SqlSession sqlSession;
 
 	@Override
-	public void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception {
-
-		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		MultipartFile multipartFile = null;
-		while (iterator.hasNext()) {
-			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-			if (multipartFile.isEmpty() == false) {
-				logger.debug("------------- file start -------------");
-				logger.debug("name : " + multipartFile.getName());
-				logger.debug("filename : " + multipartFile.getOriginalFilename());
-				logger.debug("size : " + multipartFile.getSize());
-				logger.debug("-------------- file end --------------\n");
+	public Map<String, Object> insertBoard(HttpServletRequest request)  {
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try {
+			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+			Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+			MultipartFile multipartFile = null;
+			
+			List<Map<String, String>> imgFileList = new ArrayList<Map<String, String>>();
+			
+			while (iterator.hasNext()) {
+				multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+				if (multipartFile.isEmpty() == false) {
+					
+					String name = multipartFile.getName();
+					String fileName = multipartFile.getOriginalFilename();
+					
+					
+					logger.debug("------------- file start -------------");
+					logger.debug("name : " + name);
+					logger.debug("filename : " + fileName);
+					logger.debug("size : " + multipartFile.getSize());
+					logger.debug("-------------- file end --------------\n");
+					
+					String resourcePath = request.getSession().getServletContext().getRealPath("/resources");
+					
+					new FileUtil().writeFile(multipartFile, resourcePath, fileName );
+					
+					String savePath = resourcePath + Constants.FILE_SEP + fileName;
+					
+					logger.debug("savePath : " + savePath);
+					
+					Map<String, String> savePathMap = new HashMap<String, String>();
+					savePathMap.put("fileName", fileName);
+					savePathMap.put("filePath", savePath);
+					
+					imgFileList.add( savePathMap );
+					
+				}
 			}
+			
+			resultMap.put("result", true);
+			resultMap.put("imgFileList", imgFileList);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("result", false);
 		}
 
+		return resultMap;
 	}
 	
 	@Override

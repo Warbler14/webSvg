@@ -1,8 +1,9 @@
 package com.study.websvg.controller;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
-import javax.activation.CommandMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.study.websvg.model.JsonTestVO;
 import com.study.websvg.service.SvgService;
 
 
@@ -78,17 +81,33 @@ public class SvgController {
 	public String localImgPreview(Locale locale, Model model) {
 		
 		
+		model.addAttribute("testvalue", "111222333");
+		
 		return "localImgPreview";
 	}
 	
-	@RequestMapping(value="/sample/insertBoard.do")
+	@RequestMapping(value="/imgUploadTest")
 	public ModelAndView insertBoard(HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView();
 //		ModelAndView mv = new ModelAndView("redirect:/sample/openBoardList.do");
 
-		svgService.insertBoard(null, request);
-
-		mv.setViewName("home");
+		Map<String, Object> resultMap = svgService.insertBoard(request);
+		
+		logger.debug( "" + (Boolean)resultMap.get("result") );
+		
+		mv.setViewName("redirect:/localImgPreview");
 		return mv;
+	}
+	
+	@RequestMapping("/imgUploadTestAjax")
+	@ResponseBody
+	public void imgUploadTestAjax( HttpServletRequest request ) {
+		
+		logger.debug(">>imgUploadTestAjax");
+		
+		Map<String, Object> resultMap = svgService.insertBoard(request);
+		
+		logger.debug( "" + (Boolean)resultMap.get("result") );
+		
 	}
 }

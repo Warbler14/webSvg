@@ -39,12 +39,20 @@ public class HomeController {
 
 		model.addAttribute("serverTime", formattedDate);
 		
+		return "home";
+	}
+	
+	
+	@RequestMapping(value = "/dbTest", method = RequestMethod.GET)
+	public String dbTest(Locale locale, Model model) {
+		
 		logger.debug("----------------------------");
 		String count = testService.getCount();
+		model.addAttribute("count", count);
 		logger.debug("count : " + count);
 		logger.debug("----------------------------");
 		
-		return "home";
+		return "dbTest";
 	}
 
 }

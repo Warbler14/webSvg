@@ -1,5 +1,7 @@
 package com.study.websvg.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.study.websvg.model.JsonTestVO;
 import com.study.websvg.service.SvgService;
 
 
@@ -77,25 +78,55 @@ public class SvgController {
 		logger.debug(">viewMixSvgPngImg end");
 	}
 	
-	@RequestMapping(value = "/localImgPreview", method = RequestMethod.GET)
-	public String localImgPreview(Locale locale, Model model) {
+	//--------------------------------------------------------------------------------------------------------------------
+	@RequestMapping(value = "/edit/editList")
+	public ModelAndView editList(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		
+		logger.debug( ">" + System.currentTimeMillis());
+		
+		mv.addObject("testvalue", "111222333AAA");
+		
+		ArrayList<HashMap<String,String>> imgFileList = new ArrayList<HashMap<String,String>>();
 		
 		
-		model.addAttribute("testvalue", "111222333");
+		for (int i = 0; i < 10; i++) {
+			HashMap<String,String> data = new HashMap<String,String>();
+			data.put("fileName", "file" + i);
+			data.put("savePath", "savePath" + i);
+			imgFileList.add(data);
+		}
 		
-		return "localImgPreview";
+		
+		mv.addObject("imgFileList", imgFileList);
+		
+		return mv;
 	}
+	
+	@RequestMapping(value = "/edit/editView")
+	public ModelAndView editView(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		
+		String id = request.getParameter("id");
+		
+		logger.debug("id : " + id + ", system time " + System.currentTimeMillis());
+		
+		mv.addObject("id", id);
+		mv.addObject("testvalue", "111222333oo");
+		
+		return mv;
+	}
+	
 	
 	@RequestMapping(value="/imgUploadTest")
 	public ModelAndView insertBoard(HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView();
-//		ModelAndView mv = new ModelAndView("redirect:/sample/openBoardList.do");
 
 		Map<String, Object> resultMap = svgService.insertBoard(request);
 		
 		logger.debug( "" + (Boolean)resultMap.get("result") );
 		
-		mv.setViewName("redirect:/localImgPreview");
+		mv.setViewName("redirect:edit/editView");
 		return mv;
 	}
 	

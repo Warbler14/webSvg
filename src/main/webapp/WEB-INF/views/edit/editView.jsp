@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/WEB-INF/views/common/common.jsp" %>
+
 <html>
 <head>
 <style type="text/css">
@@ -17,12 +18,13 @@
 		margin-top:10px;
 	}
 </style>
-<title>localImgPreview</title>
+<title>editView.jsp</title>
 
 </head>
 
 <body>
-	<form id="form1" name="form1" enctype="multipart/form-data" >
+		<form id="form1" name="form1" enctype="multipart/form-data" >
+		
 		<div id="imgFile">
 			<span>img file : </span>
 			<input type='file' name="imgFile" onchange="readURL(this);" />
@@ -31,7 +33,7 @@
 			 
 			 &nbsp;&nbsp;
 			 
-			 <a href="#this" class="btn" id="ajaxTest">ajax</a>
+			 <a href="<%=request.getContextPath()%>/edit/editList"  >목록</a>
 			 
 			 &nbsp;&nbsp;
 			 
@@ -40,29 +42,36 @@
 		</div>
 		
 		<div id="imgView">
-			<img id="blah" src="#"	alt="your image" />
+			
+			<img id="blah" src=""	alt="your image" />
+			
 		</div>
 		
 	</form>
+	1. 목록 페이지 생성<br/>
+		>목록 테이블 추가<br/>
+		>저장된 db 데이터 호출<br/>
+		>저장된 db 데이터로 목록 출력<br/>
+		>
+		
+	2. 등록/조회 버튼으로 페이지 호출<br/>
+		>이미지 n개 동적 등록<br/>
+		
+	3. 각 순서에 따라 n개 파일 업로드<br/>
+		>각 파일 업로드<br/>
+		>각 파일 합성<br/>
+		
+	
+		<span>testvalue :  ${testvalue}</span>
+	<span> id : ${id}</span>
+	
+	<br/><br/>
 	
 	
-	<c:forEach var="item" items="${imgFileList}">
-		<tr align="center" background="" onmouseover="this.style.backgroundColor='SkyBlue'" onmouseout="this.style.backgroundColor=''" >
-			<td>${item.fileName}</td>
-			<td>${item.savePath}</td>
-<%-- 
-			<td><fn:formatDate value="${item.bdate}" pattern="yy-MM-dd aahh:mm:ss" /></td>
- --%>	
-		</tr>
-	</c:forEach>
 	
-	
-	<P>  testvalue ${testvalue}. </P>
 	
 </body>
 
-<script type="text/javascript" src="./resources/js/jquery-2.1.1.min.js"></script>
-<script src="<c:url value='./resources/js/common.js'/>" charset="utf-8"></script>
 <script type="text/javascript">
 	var console = window.console || {log : function() {}};
 
@@ -79,10 +88,6 @@
 			ajaxFormUpload();
 		});
 		
-		$("#ajaxTest").on("click", function(e) {
-			e.preventDefault();
-			ajaxJS();
-		});
 	});
 
 	function readURL(input) {
@@ -106,31 +111,6 @@
 		comSubmit.submit();
 	}
 	
-	function ajaxJS(){
-		/* var id = $("#id").val(); */
-		
-		var ajaxUrl = "<c:url value='/jsonTest' />";
-		console.log("test start");
-		
-		
-		$.ajax({
-			url:ajaxUrl,
-			dataType:"json",	
-			Type:"post",
-			data:{
-				send:"123a"
-			},
-			success : function(data) {
-				console.log("name : " + data.name ) ;
-				console.log("str : " + data.str ) ;
-				console.log("number : " + data.number ) ;
-			}
-		});
-		
-		console.log("test end");
-	}
-	
-
 	function ajaxFormUpload() {
 		var form = $('#form1')[0];
 		var formData = new FormData(form);

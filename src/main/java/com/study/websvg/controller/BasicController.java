@@ -54,7 +54,7 @@ public class BasicController {
 		model.addAttribute("count", count);
 		logger.debug("count : " + count);
 		
-		return "dbTest";
+		return "sample/dbTest";
 	}
 	
 	@RequestMapping("/jsonTest")

@@ -3,7 +3,6 @@ package com.study.websvg.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.study.websvg.model.SvgVo;
 import com.study.websvg.service.SvgService;
 
 
@@ -87,18 +86,19 @@ public class SvgController {
 		
 		mv.addObject("testvalue", "111222333AAA");
 		
-		ArrayList<HashMap<String,String>> imgFileList = new ArrayList<HashMap<String,String>>();
-		
-		
-		for (int i = 0; i < 10; i++) {
-			HashMap<String,String> data = new HashMap<String,String>();
-			data.put("fileName", "file" + i);
-			data.put("savePath", "savePath" + i);
-			imgFileList.add(data);
+		try {
+			List<SvgVo> svgList = svgService.getList();
+			
+			for (int i = 0; i < svgList.size() ; i++) {
+				SvgVo vo = svgList.get(i);
+				logger.debug(  vo.toStringMultiline() );
+			}
+			
+			mv.addObject("svgList", svgList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		
-		mv.addObject("imgFileList", imgFileList);
 		
 		return mv;
 	}

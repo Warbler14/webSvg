@@ -20,13 +20,16 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.JPEGTranscoder;
 import org.apache.batik.transcoder.image.PNGTranscoder;
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.study.websvg.define.Constants;
+import com.study.websvg.model.SvgVo;
 import com.study.websvg.service.SvgService;
 import com.study.websvg.util.FileUtil;
 
@@ -35,9 +38,17 @@ public class SvgServiceImp implements SvgService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SvgServiceImp.class);
 	
-//	@Autowired
-//	private SqlSession sqlSession;
+	@Autowired
+	private SqlSession sqlSession;
 
+
+	@Override
+	public List<SvgVo> getList() {
+		return sqlSession.selectList("SvgMapper.imgList");
+	}
+	
+	
+	
 	@Override
 	public Map<String, Object> insertBoard(HttpServletRequest request)  {
 		
@@ -131,7 +142,7 @@ public class SvgServiceImp implements SvgService {
 
 		try {
 			
-			String serverImagePath = request.getSession().getServletContext().getRealPath("/WEB-INF/image/bird.jpg" );
+			String serverImagePath = request.getSession().getServletContext().getRealPath("/resources/image/bird.jpg" );
 			
 			logger.info("serverImagePath : " + serverImagePath);
 			
@@ -195,7 +206,7 @@ public class SvgServiceImp implements SvgService {
 			svgOut.close();
 			//====================
 			
-			String serverImagePath = request.getSession().getServletContext().getRealPath("/WEB-INF/image/bird.jpg" );
+			String serverImagePath = request.getSession().getServletContext().getRealPath("/resources/image/bird.jpg" );
 			
 			logger.info("serverImagePath : " + serverImagePath);
 			
@@ -277,7 +288,7 @@ public class SvgServiceImp implements SvgService {
 			svgOut.close();
 			//==============================================
 			
-			String serverImagePath = request.getSession().getServletContext().getRealPath("/WEB-INF/image/bird.jpg" );
+			String serverImagePath = request.getSession().getServletContext().getRealPath("/resources/image/bird.jpg" );
 			
 			logger.info("serverImagePath : " + serverImagePath);
 			
@@ -323,4 +334,5 @@ public class SvgServiceImp implements SvgService {
 		}
 		
 	}
+
 }

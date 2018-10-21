@@ -1,11 +1,14 @@
 package com.study.websvg.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
+
+import com.study.websvg.model.SvgVo;
 
 
 @Service
@@ -20,4 +23,7 @@ public interface SvgService {
 	public void getMixSvgJpgImg( HttpServletRequest request, HttpServletResponse response );
 	
 	public void getMixSvgPngImg( HttpServletRequest request, HttpServletResponse response );
+	
+	public List<SvgVo> getList();
+	
 }

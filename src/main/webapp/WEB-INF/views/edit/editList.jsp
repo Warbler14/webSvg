@@ -83,12 +83,12 @@
 					<th>저장 시간</th>
 					<th>수정</th>
 				</tr>
-				<c:forEach var="item" items="${imgFileList}">
+				<c:forEach var="item" items="${svgList}">
 					<tr align="center" >
-						<td>${item.fileName}</td>
-						<td>${item.savePath}</td>
-						<td>${item.saveDate}</td>
-						<td><a href="#this" class="btn" id="goEditview" onclick="javascript:goEditview('${item.fileName}')">작성하기</a>
+						<td>${item.imgName}</td>
+						<td>${item.imgPath}</td>
+						<td>${item.regDate}</td>
+						<td><a href="#this" class="btn" id="goEditview" onclick="javascript:goEditview('${item.imgId}')">작성하기</a>
 						
 					</tr>
 				</c:forEach>

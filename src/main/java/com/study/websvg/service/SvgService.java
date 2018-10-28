@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
 
-import com.study.websvg.model.SvgVo;
+import com.study.websvg.model.ImgVo;
 
 
 @Service
 public interface SvgService {
 
-	public Map<String, Object> insertBoard(HttpServletRequest request) ;
+	public Map<String, Object> insertBoard(HttpServletRequest request, HttpServletResponse response) ;
 	
 	public void getSvgImg( HttpServletRequest request, HttpServletResponse response );
 	
@@ -24,6 +24,6 @@ public interface SvgService {
 	
 	public void getMixSvgPngImg( HttpServletRequest request, HttpServletResponse response );
 	
-	public List<SvgVo> getList();
+	public List<ImgVo> getList();
 	
 }

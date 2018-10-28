@@ -5,6 +5,19 @@
 <html>
 <head>
 <style type="text/css">
+
+	#svgText {
+		border: 2px dotted pink; 
+		margin-left:10px;
+		margin-top:10px;
+		background-color: "orange"
+	}
+	
+	#svgText  textarea {
+		align-content:center;
+		overflow:auto; 
+	}
+
 	#imgFile {
 		border: 2px dotted red; 
 		margin-left:10px;
@@ -12,10 +25,30 @@
 		background-color: "orange"
 	}
 	
-	#imgView {
+	#imgViewLeft {
+		float: left;
+		width : 48.5%;
+		border: 2px dotted gold;
+		margin-left:10px;
+		margin-top:10px;
+	}
+	
+	#imgViewRight {
+		float: left;
+		width : 48.5%;
 		border: 2px dotted green;
 		margin-left:10px;
 		margin-top:10px;
+	}
+	
+	#imgViewEnd{
+		clear:both;
+	}
+	
+	#footer {
+		margin-left:10px;
+		margin-top:10px;
+		border: 2px dotted black;
 	}
 </style>
 <title>editView.jsp</title>
@@ -23,50 +56,57 @@
 </head>
 
 <body>
-		<form id="form1" name="form1" enctype="multipart/form-data" >
+	<form id="form1" name="form1" enctype="multipart/form-data" >
+		
+		<div id="svgText">
+			<textarea id="svgTextarea"  name="svgText" rows="20" cols="100">
+
+			</textarea>
+			<br/>
+			
+			<span>svgPosX</span>&nbsp;&nbsp;<input type="text" id="svgPosX" name="svgPosX" value="10"/><br/>
+			<span>svgPosY</span>&nbsp;&nbsp;<input type="text" id="svgPosY" name="svgPosY" value="10"/><br/>
+		</div>
 		
 		<div id="imgFile">
 			<span>img file : </span>
-			<input type='file' name="imgFile" onchange="readURL(this);" />
+			<input type='file' name="imgFile"  id="imgFile" onchange="readURL(this);" />
 			
-			 <a href="#this" class="btn" id="write">작성하기</a>
-			 
-			 &nbsp;&nbsp;
-			 
-			 <a href="<%=request.getContextPath()%>/edit/editList"  >목록</a>
-			 
-			 &nbsp;&nbsp;
-			 
-			 <a href="#this" class="btn" id="upload">ajax파일 보내기</a>
-			 
-		</div>
-		
-		<div id="imgView">
+			<%--  
+			<a href="#this" class="btn" id="write">작성하기</a>
+			&nbsp;&nbsp;
 			
-			<img id="blah" src=""	alt="your image" />
+			<%--  
+			<a href="<%=request.getContextPath()%>/edit/editList"  >목록</a>
+			&nbsp;&nbsp;
+			 --%>
+			
+			<a href="#this" class="btn" id="upload">전송</a>
 			
 		</div>
 		
+		<div id="imgViewLeft">
+			
+			<img id="blah"  src="" alt="upload image" />
+			
+		</div>
+		<div id="imgViewRight">
+			
+			<img id="resultImg"  src=""  alt="result image" />
+			<div id="resultLinkArea"></div>
+			
+		</div>
+		<div id="imgViewEnd"></div>
 	</form>
-	1. 목록 페이지 생성<br/>
-		>목록 테이블 추가<br/>
-		>저장된 db 데이터 호출<br/>
-		>저장된 db 데이터로 목록 출력<br/>
-		>
-		
-	2. 등록/조회 버튼으로 페이지 호출<br/>
-		>이미지 n개 동적 등록<br/>
-		
-	3. 각 순서에 따라 n개 파일 업로드<br/>
-		>각 파일 업로드<br/>
-		>각 파일 합성<br/>
+	
+	<div id="footer">
+	<%-- 	<span>testvalue :  ${testvalue}</span> --%>
+		<span> id : ${id}</span>
 		
 	
-		<span>testvalue :  ${testvalue}</span>
-	<span> id : ${id}</span>
 	
-	<br/><br/>
 	
+	</div>
 	
 	
 	
@@ -78,15 +118,18 @@
 	$(document).ready(function() {
 		console.log("localImgPreview load");
 
-		$("#write").on("click", function(e) {
-			e.preventDefault();
-			fn_insertBoard();
-		});
+//		$("#write").on("click", function(e) {
+//			e.preventDefault();
+//			fn_insertBoard();
+//		});
 		
 		$("#upload").on("click", function(e) {
 			e.preventDefault();
 			ajaxFormUpload();
 		});
+		
+		console.log("appendSampleSvg");
+		appendSampleSvg();
 		
 	});
 
@@ -123,9 +166,42 @@
 			data : formData,
 			type : 'POST',
 			success : function(result) {
-				alert("업로드 성공!!");
+				//alert("업로드 성공!!");
+				console.log( "업로드 성공!!" );
+				
+				var resultObj = JSON.parse(result);
+				
+				setImg( resultObj.fileName )
+				
+				$("#blah").attr("src", "");
 			}
 		});
 	}
+	
+	function appendSampleSvg(){
+		$("#svgTextarea").load( getContextPath() +"/resources/svg/sample.svg" );
+	}
+	
+	function setImg( resource ){
+		var path = getContextPath() +"/resources" + resource;
+		//var path = "/resources/" + resource;
+		
+		//alert( path );
+		console.log( path );
+		
+		$('#resultImg').attr('src', path );
+		
+		var link = "<span>" + resource + "</span>";
+		console.log( link );
+		
+		$("#resultLinkArea").empty();
+		$("#resultLinkArea").append( "<span>" + resource + "</span>" );
+		
+	}
+	
+	function clean() {
+		$("#imgViewRight").empty();
+	}
+	
 </script>
 </html>

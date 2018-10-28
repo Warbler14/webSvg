@@ -44,3 +44,7 @@ function ComSubmit(opt_formId) {
 		frm.submit();
 	};
 }
+
+function getContextPath() {
+	return "<c:out value='${pageContext.request.contextPath}' />";
+}

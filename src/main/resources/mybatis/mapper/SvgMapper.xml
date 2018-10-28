@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SvgMapper">
 
-	<select id="imgList" resultType="SvgVo">
+	<select id="imgList" resultType="ImgVo">
 		SELECT img_id
 				, img_name
 				, img_path

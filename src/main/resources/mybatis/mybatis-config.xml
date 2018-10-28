@@ -20,7 +20,7 @@
 	
 
 	<typeAliases>
-		<typeAlias type="com.study.websvg.model.SvgVo" alias="SvgVo"/>
+		<typeAlias type="com.study.websvg.model.ImgVo" alias="ImgVo"/>
 	</typeAliases>
 	
 

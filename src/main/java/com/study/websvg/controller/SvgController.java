@@ -1,7 +1,6 @@
 package com.study.websvg.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.study.websvg.model.SvgVo;
+import com.google.gson.JsonObject;
+import com.study.websvg.model.ImgVo;
 import com.study.websvg.service.SvgService;
 
 
@@ -87,10 +87,10 @@ public class SvgController {
 		mv.addObject("testvalue", "111222333AAA");
 		
 		try {
-			List<SvgVo> svgList = svgService.getList();
+			List<ImgVo> svgList = svgService.getList();
 			
 			for (int i = 0; i < svgList.size() ; i++) {
-				SvgVo vo = svgList.get(i);
+				ImgVo vo = svgList.get(i);
 				logger.debug(  vo.toStringMultiline() );
 			}
 			
@@ -119,10 +119,10 @@ public class SvgController {
 	
 	
 	@RequestMapping(value="/imgUploadTest")
-	public ModelAndView insertBoard(HttpServletRequest request) throws Exception{
+	public ModelAndView insertBoard(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ModelAndView mv = new ModelAndView();
 
-		Map<String, Object> resultMap = svgService.insertBoard(request);
+		Map<String, Object> resultMap = svgService.insertBoard(request, response);
 		
 		logger.debug( "" + (Boolean)resultMap.get("result") );
 		
@@ -132,13 +132,20 @@ public class SvgController {
 	
 	@RequestMapping("/imgUploadTestAjax")
 	@ResponseBody
-	public void imgUploadTestAjax( HttpServletRequest request ) {
+	public String imgUploadTestAjax( HttpServletRequest request , HttpServletResponse response) {
+		JsonObject jso = new JsonObject();    // JASON 객체생성
 		
 		logger.debug(">>imgUploadTestAjax");
 		
-		Map<String, Object> resultMap = svgService.insertBoard(request);
-		
+		Map<String, Object> resultMap = svgService.insertBoard(request, response);
 		logger.debug( "" + (Boolean)resultMap.get("result") );
 		
+		String fileName = (String) resultMap.get("mixImg");
+			
+		logger.debug(">fileName : " + fileName);
+		jso.addProperty("fileName", fileName);
+			
+		
+		return jso.toString();
 	}
 }

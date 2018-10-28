@@ -26,9 +26,14 @@
 	<a href="<%=request.getContextPath()%>/edit/editView"  >editView</a><br/>
 	<a href="<%=request.getContextPath()%>/dbTest"  >dbTest</a><br/>
 	<a href="<%=request.getContextPath()%>/jsonTest"  >jsonTest</a><br/>
-	<a href="#this" class="btn" id="ajaxTest">ajaxTest</a>
+	<a href="#this" class="btn" id="ajaxTest">ajaxTest</a><br/>
 	
+	<br/>
 	
+	<a href="<%=request.getContextPath()%>/drawAjaxImage?cmd=inputPage"  >drawAjaxImage</a><br/>
+	<a href="<%=request.getContextPath()%>/drawText?cmd=inputPage"  >drawText</a><br/>
+	<a href="<%=request.getContextPath()%>/drawRandomColor?cmd=inputPage"  >drawRandomColor</a><br/>
+	<a href="<%=request.getContextPath()%>/drawColorMatrix?cmd=inputPage"  >drawColorMatrix</a><br/>
 	
 </span>
 

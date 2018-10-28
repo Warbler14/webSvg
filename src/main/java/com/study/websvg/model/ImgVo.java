@@ -3,13 +3,15 @@ package com.study.websvg.model;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class SvgVo {
+public class ImgVo {
 	
-	int imgId = 0;
-	String imgName;
-	String imgPath;
-	String regDate;
-	String modDate;
+	private int imgId = 0;
+	private String imgName;
+	private String imgPath;
+	private int positionX = 0;
+	private int positionY = 0;
+	private String regDate;
+	private String modDate;
 	
 	public int getImgId() {
 		return imgId;
@@ -28,6 +30,18 @@ public class SvgVo {
 	}
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
+	}
+	public int getPositionX() {
+		return positionX;
+	}
+	public void setPositionX(int positionX) {
+		this.positionX = positionX;
+	}
+	public int getPositionY() {
+		return positionY;
+	}
+	public void setPositionY(int positionY) {
+		this.positionY = positionY;
 	}
 	public String getRegDate() {
 		return regDate;

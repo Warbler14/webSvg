@@ -167,8 +167,14 @@ public class FileUtil {
 	public boolean writeFile(MultipartFile multipartFile, String saveFilePath, String saveFileName) throws IOException {
 		boolean result = false;
 
+		File fileDir = new File(saveFilePath);
+
+		if (!fileDir.exists()) {
+			fileDir.mkdirs();
+		}
+		
 		byte[] data = multipartFile.getBytes();
-		FileOutputStream fos = new FileOutputStream(saveFilePath + "/" + saveFileName);
+		FileOutputStream fos = new FileOutputStream(saveFilePath + FILE_SEP + saveFileName);
 		fos.write(data);
 		fos.close();
 

@@ -184,7 +184,6 @@
 	
 	function setImg( resource ){
 		var path = getContextPath() +"/resources" + resource;
-		//var path = "/resources/" + resource;
 		
 		//alert( path );
 		console.log( path );

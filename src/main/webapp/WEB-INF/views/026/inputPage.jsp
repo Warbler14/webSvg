@@ -18,7 +18,7 @@
 	
 	.area01 {
 	    width: 490px;
-	    height: 490px;
+	    height: 300px;
 	    background-color: #d6f0d6;
 	    border: 1px solid #48BAE4;
 	    padding: 1px;
@@ -194,7 +194,7 @@
 		data = data.replace(/#/gi, "_");
 		data = data.replace("_", "");
 		
-		alert( contextpath );
+		//alert( contextpath );
 		
 		var img = contextpath + "/drawColorMatrix?cmd=drawImage"
 				+ "&boxWidth="+ boxWidth +"&boxHeight=" + boxHeight

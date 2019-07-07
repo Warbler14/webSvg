@@ -14,7 +14,7 @@
 <P>  The time on the server is ${serverTime}. </P>
 
 
-<span>
+<div>
 	<a href="<%=request.getContextPath()%>/viewSvgImg"  >viewSvgImg</a><br/>
 	<a href="<%=request.getContextPath()%>/viewLocalImg"  >viewLocalImg</a><br/>
 	<a href="<%=request.getContextPath()%>/viewMixSvgJpgImg"  >viewMixSvgJpgImg</a><br/>
@@ -22,12 +22,8 @@
 	
 	<br/>
 	
-	<a href="<%=request.getContextPath()%>/edit/editList"  >editList</a><br/>
+	<%-- <a href="<%=request.getContextPath()%>/edit/editList"  >editList</a><br/> --%>
 	<a href="<%=request.getContextPath()%>/edit/editView"  >editView</a><br/>
-	<a href="<%=request.getContextPath()%>/dbTest"  >dbTest</a><br/>
-	<a href="<%=request.getContextPath()%>/jsonTest"  >jsonTest</a><br/>
-	<a href="#this" class="btn" id="ajaxTest">ajaxTest</a><br/>
-	
 	<br/>
 	
 	<a href="<%=request.getContextPath()%>/drawAjaxImage?cmd=inputPage"  >drawAjaxImage</a><br/>
@@ -35,7 +31,12 @@
 	<a href="<%=request.getContextPath()%>/drawRandomColor?cmd=inputPage"  >drawRandomColor</a><br/>
 	<a href="<%=request.getContextPath()%>/drawColorMatrix?cmd=inputPage"  >drawColorMatrix</a><br/>
 	
-</span>
+	<%-- 
+	<a href="<%=request.getContextPath()%>/dbTest"  >dbTest</a><br/>
+	<a href="<%=request.getContextPath()%>/jsonTest"  >jsonTest</a><br/>
+	<a href="#this" class="btn" id="ajaxTest">ajaxTest</a><br/>
+	--%>
+</div>
 
 <br/>
 

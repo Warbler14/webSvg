@@ -15,12 +15,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.study.websvg.service.CommandLoader;
 
 public class CommandLoader017 implements CommandLoader{
-	static Logger logger = Logger.getLogger(CommandLoader017.class);
+	private static final Logger logger = LoggerFactory.getLogger(CommandLoader017.class);
 	
 	private String move_page [][] ;
 	private String parameters [] ;
@@ -80,7 +81,8 @@ public class CommandLoader017 implements CommandLoader{
 				paintProcessJPG( request, response, BufferedImage.TYPE_INT_RGB , Color.white, dataMap);
 				
 			}catch(Exception e){
-				logger.error("Exception : " + e.getMessage() );
+				logger.error("!! Exception : " + e.getMessage() );
+				e.printStackTrace();
 			}
 			
 		}else{
@@ -93,8 +95,8 @@ public class CommandLoader017 implements CommandLoader{
 		}
 	}
 	
-	private HashMap<String, Integer> loadParam( HttpServletRequest request, ArrayList<String> messagelist ){
 		//---------------------------------------------------------------------------------
+	private HashMap<String, Integer> loadParam( HttpServletRequest request, ArrayList<String> messagelist ){
 		HashMap<String, Integer> dataMap = new HashMap<String, Integer>();
 		//---------------------------------------------------------------------------------
 		
@@ -103,7 +105,10 @@ public class CommandLoader017 implements CommandLoader{
 				String param = request.getParameter( parameters[y] );
 				logger.debug("param : " + parameters[y] + ", value : " + param);
 				
-				dataMap.put( parameters[y] , Integer.valueOf( param ) );
+				logger.info("param : " + param);
+				int value = (int)Math.round(Double.valueOf(param));
+				
+				dataMap.put(parameters[y], value);
 				
 				
 				
@@ -119,7 +124,7 @@ public class CommandLoader017 implements CommandLoader{
 			
 			messagelist.add( e.getMessage() );
 			
-			logger.error("Exception : " + e.getMessage() );
+			logger.error("~ Exception : " + e.getMessage() );
 		}
 		
 		return dataMap;
@@ -139,8 +144,11 @@ public class CommandLoader017 implements CommandLoader{
 		
 		g.setPaint(baseColor);
 		
+		int x = dataMap.get( "x_pos" );
+		int y = dataMap.get( "y_pos" );
 		
-		g.fillRect( dataMap.get( "x_pos" ), dataMap.get( "y_pos" ) , dotSize, dotSize);
+		
+		g.fillRect(x, y, dotSize, dotSize);
 		
 		
 		//----------------------------------------------

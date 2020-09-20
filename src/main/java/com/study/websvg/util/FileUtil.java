@@ -11,13 +11,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtil {
 
+	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
+
 	public static final String FILE_SEP = System.getProperty("file.separator");
-	static Logger logger = Logger.getLogger(FileUtil.class);
 
 	public final static String TYPE_STRING = "String";
 	public final static String TYPE_ARRAY_STRING = "ArrayList<String>";

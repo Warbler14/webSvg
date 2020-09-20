@@ -14,12 +14,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.study.websvg.service.CommandLoader;
 
 public class CommandLoader019 implements CommandLoader{
-	static Logger logger = Logger.getLogger(CommandLoader019.class);
+	private static final Logger logger = LoggerFactory.getLogger(CommandLoader019.class);
 	
 	private String move_page [][] ;
 	private String parameters [] ;

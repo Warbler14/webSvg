@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.study.websvg.serviceImp.CommandLoader018;
 import com.study.websvg.service.Page;
@@ -24,12 +26,13 @@ import com.study.websvg.service.Page;
 public class ImageGet018 extends HttpServlet {
 private static final long serialVersionUID = 1L;
 	
+	private static final Logger logger = LoggerFactory.getLogger(ImageGet018.class);
+	
 	public final static String COMPUTE01 = "drawImage";
 	public final static String MOVE_PAGE [][] = {{"inputPage", "/WEB-INF/views/018/inputPage.jsp"}
 												,{COMPUTE01, COMPUTE01}};
 	public final static String [] PARAMETERS = {"message", "letterWidth", "letterHight"};
 	
-	static Logger logger = Logger.getLogger(ImageGet018.class);
 
 	CommandLoader018 service;
 	

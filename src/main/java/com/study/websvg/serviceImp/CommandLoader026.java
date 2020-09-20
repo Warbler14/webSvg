@@ -15,12 +15,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.study.websvg.service.CommandLoader;
 
 public class CommandLoader026 implements CommandLoader{
-	static Logger logger = Logger.getLogger(CommandLoader026.class);
+	private static final Logger logger = LoggerFactory.getLogger(CommandLoader026.class);
 	
 	private String move_page [][] ;
 	private String parameters [] ;
@@ -165,7 +166,9 @@ public class CommandLoader026 implements CommandLoader{
 					if( pointer < dataArr.length ){
 						
 						
-						logger.debug( Color.decode( getHex( dataArr[pointer] ) ));
+						Color color = Color.decode(getHex(dataArr[pointer]));
+						
+						logger.debug( color.toString() );
 						g.setPaint( Color.decode( getHex( dataArr[pointer] ) ) );
 						
 						

@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * http://localhost:8080/websvg/ImageGetSize?width=100&height=100
@@ -20,7 +21,7 @@ import org.apache.log4j.Logger;
 public class ImageGet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	static Logger logger = Logger.getLogger(ImageGet.class);
+	private static final Logger logger = LoggerFactory.getLogger(ImageGet.class);
 
 	public ImageGet() {
 		super();

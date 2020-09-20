@@ -16,11 +16,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CommonUtil {
 
-	private static final Logger LOGGER = Logger.getLogger(CommonUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(CommonUtil.class);
 
 	private static String NETWORK_CHK = "cmd.exe /c netstat -ano |findstr :"; // 포트 확인 CMD
 
@@ -77,14 +78,14 @@ public class CommonUtil {
 							break;
 					}
 				} catch (SocketException e1) {
-					LOGGER.debug(replaceStringCRLF(e1.getMessage()));
+					logger.debug(replaceStringCRLF(e1.getMessage()));
 				}
 			} else {
 				// IP 정보 리턴.
 				ip = InetAddress.getLocalHost().getHostAddress();
 			}
 		} catch (Exception e) {
-			LOGGER.error(replaceStringCRLF(e.getMessage()));
+			logger.error(replaceStringCRLF(e.getMessage()));
 			// 실행시 Exception 발생해도 후행 프로세스는 동작해야한다.
 			// return 값으로 판단하여 로직처리한다.
 		}
@@ -113,7 +114,7 @@ public class CommonUtil {
 			}
 
 		} catch (Exception e) {
-			LOGGER.info("[getPortPid] e : " + replaceStringCRLF(e.getMessage()));
+			logger.info("[getPortPid] e : " + replaceStringCRLF(e.getMessage()));
 			return "";
 		}
 		return pid;
@@ -136,7 +137,7 @@ public class CommonUtil {
 				String checkData = commandExeOutArray(commandLinux);
 				pid = checkData.split("\n")[1];
 
-				LOGGER.info("[getVmPortPid] commandLinux : "
+				logger.info("[getVmPortPid] commandLinux : "
 						+ replaceStringCRLF(Arrays.toString(commandLinux) + ", pid : " + pid));
 
 			} else {
@@ -145,7 +146,7 @@ public class CommonUtil {
 			}
 
 		} catch (Exception e) {
-			LOGGER.info("[getVmPortPid] e : " + replaceStringCRLF(e.getMessage()));
+			logger.info("[getVmPortPid] e : " + replaceStringCRLF(e.getMessage()));
 			return "";
 		}
 		return pid;
@@ -196,7 +197,7 @@ public class CommonUtil {
 
 	public String commandExeOut(String command) throws Exception {
 
-		LOGGER.debug("[commandExeOut] Start");
+		logger.debug("[commandExeOut] Start");
 		final long startTime = System.currentTimeMillis();
 
 		StringBuffer sb = new StringBuffer();
@@ -229,45 +230,45 @@ public class CommonUtil {
 				if (process.getInputStream() != null)
 					process.getInputStream().close();
 			} catch (Exception e2) {
-				LOGGER.debug(replaceStringCRLF(e2.getMessage()));
+				logger.debug(replaceStringCRLF(e2.getMessage()));
 			}
 
 			try {
 				if (process.getInputStream() != null)
 					process.getOutputStream().close();
 			} catch (Exception e2) {
-				LOGGER.debug(replaceStringCRLF(e2.getMessage()));
+				logger.debug(replaceStringCRLF(e2.getMessage()));
 			}
 
 			try {
 				if (process.getInputStream() != null)
 					process.getErrorStream().close();
 			} catch (Exception e2) {
-				LOGGER.debug(replaceStringCRLF(e2.getMessage()));
+				logger.debug(replaceStringCRLF(e2.getMessage()));
 			}
 
 			try {
 				if (br != null)
 					br.close();
 			} catch (Exception e2) {
-				LOGGER.debug(replaceStringCRLF(e2.getMessage()));
+				logger.debug(replaceStringCRLF(e2.getMessage()));
 			}
 			try {
 				if (isr != null)
 					isr.close();
 			} catch (Exception e2) {
-				LOGGER.debug(replaceStringCRLF(e2.getMessage()));
+				logger.debug(replaceStringCRLF(e2.getMessage()));
 			}
 			try {
 				if (is != null)
 					is.close();
 			} catch (Exception e2) {
-				LOGGER.debug(replaceStringCRLF(e2.getMessage()));
+				logger.debug(replaceStringCRLF(e2.getMessage()));
 			}
 		}
 
 		final long endTime = System.currentTimeMillis();
-		LOGGER.info("[commandExeOut] End in " + (endTime - startTime) / 1000.0f + " secs\n");
+		logger.info("[commandExeOut] End in " + (endTime - startTime) / 1000.0f + " secs\n");
 
 		return sb.toString();
 	}
@@ -281,11 +282,11 @@ public class CommonUtil {
 	 */
 	public String commandExeOutArray(String[] command) throws Exception {
 
-		LOGGER.debug("[commandExeOutArray] Start");
+		logger.debug("[commandExeOutArray] Start");
 		final long startTime = System.currentTimeMillis();
 
 		for (int i = 0; i < command.length; i++) {
-			LOGGER.debug("command : " + replaceStringCRLF(command[i]));
+			logger.debug("command : " + replaceStringCRLF(command[i]));
 		}
 
 		StringBuffer sb = new StringBuffer();
@@ -319,45 +320,45 @@ public class CommonUtil {
 				if (process.getInputStream() != null)
 					process.getInputStream().close();
 			} catch (Exception e2) {
-				LOGGER.error(replaceStringCRLF(e2.getMessage()));
+				logger.error(replaceStringCRLF(e2.getMessage()));
 			}
 
 			try {
 				if (process.getInputStream() != null)
 					process.getOutputStream().close();
 			} catch (Exception e2) {
-				LOGGER.error(replaceStringCRLF(e2.getMessage()));
+				logger.error(replaceStringCRLF(e2.getMessage()));
 			}
 
 			try {
 				if (process.getInputStream() != null)
 					process.getErrorStream().close();
 			} catch (Exception e2) {
-				LOGGER.error(replaceStringCRLF(e2.getMessage()));
+				logger.error(replaceStringCRLF(e2.getMessage()));
 			}
 
 			try {
 				if (br != null)
 					br.close();
 			} catch (Exception e2) {
-				LOGGER.error(replaceStringCRLF(e2.getMessage()));
+				logger.error(replaceStringCRLF(e2.getMessage()));
 			}
 			try {
 				if (isr != null)
 					isr.close();
 			} catch (Exception e2) {
-				LOGGER.error(replaceStringCRLF(e2.getMessage()));
+				logger.error(replaceStringCRLF(e2.getMessage()));
 			}
 			try {
 				if (is != null)
 					is.close();
 			} catch (Exception e2) {
-				LOGGER.error(replaceStringCRLF(e2.getMessage()));
+				logger.error(replaceStringCRLF(e2.getMessage()));
 			}
 		}
 
 		final long endTime = System.currentTimeMillis();
-		LOGGER.debug("[commandExeOutArray] End in " + (endTime - startTime) / 1000.0f + " secs\n");
+		logger.debug("[commandExeOutArray] End in " + (endTime - startTime) / 1000.0f + " secs\n");
 
 		return sb.toString();
 	}
